@@ -1,33 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Spankins by mateoconfeugo</title>
+    <meta name="description" content="Spankins : a Jenkins inspired continuous integration server and DSL">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Spankins</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Spankins</h1>
-        <p>a jenkins inspired continuous integration server</p>
 
-        <p class="view"><a href="https://github.com/mateoconfeugo/spankins">View the Project on GitHub <small>mateoconfeugo/spankins</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mateoconfeugo/spankins">View on GitHub</a>
 
+          <h1 id="project_title">Spankins</h1>
+          <h2 id="project_tagline">a Jenkins inspired continuous integration server and DSL</h2>
 
-        <ul>
-          <li><a href="https://github.com/mateoconfeugo/spankins/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mateoconfeugo/spankins/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/mateoconfeugo/spankins">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mateoconfeugo/spankins/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mateoconfeugo/spankins/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <ul>
 <li>
 <p>Why?
@@ -44,10 +47,10 @@ some of the problems with jenkins:</p>
 <li>difficult for developers to run on their own.</li>
 <li>We should be simplifing the process not adding to the complexity</li>
 </ol>
+
 <p>The hope of all this is</p>
 </li>
-</ul><ul>
-<li>   Simple to understand continuous integration program that is flexibly and easy to maintain and understand</li>
+<li><p>Simple to understand continuous integration program that is flexibly and easy to maintain and understand</p></li>
 <li>   Lightweight -  okay,  its running on the jvm but compared to a typical jenkins install with all its plugins</li>
 <li>   Very fast compared to anything.</li>
 <li>   Easy to make new job types out of function graphs and easy to customize these types.</li>
@@ -64,13 +67,16 @@ some of the problems with jenkins:</p>
 <li>hierarchy of composable maps results in a customized "jenkins job"</li>
 <li>cascading hierarcies achieved using multimethods</li>
 </ul>
+
 <p>The control level of the software uses channel operation fuctions.</p>
 </li>
-</ul><h2>
-<a name="terms" class="anchor" href="#terms"><span class="octicon octicon-link"></span></a>Terms</h2>
+</ul>
+
+<h2>
+<a id="terms" class="anchor" href="#terms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terms</h2>
 
 <h3>
-<a name="server" class="anchor" href="#server"><span class="octicon octicon-link"></span></a>Server</h3>
+<a id="server" class="anchor" href="#server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Server</h3>
 
 <ul>
 <li>Server doesn't do any job specific stuff all of that is left to the invoked compiled function graphs (ICFG).  Similar to jenkins and its plugins</li>
@@ -93,13 +99,15 @@ some of the problems with jenkins:</p>
 <li>The "jenkins"-lite server takes these results and</li>
 </ol>
 </li>
-</ul><h3>
-<a name="dsl" class="anchor" href="#dsl"><span class="octicon octicon-link"></span></a>DSL</h3>
+</ul>
+
+<h3>
+<a id="dsl" class="anchor" href="#dsl" aria-hidden="true"><span class="octicon octicon-link"></span></a>DSL</h3>
 
 <p>A set of composable macros that build out the stages of the jobs workflow and in the end create a job graph</p>
 
 <h3>
-<a name="job-graph" class="anchor" href="#job-graph"><span class="octicon octicon-link"></span></a>Job Graph</h3>
+<a id="job-graph" class="anchor" href="#job-graph" aria-hidden="true"><span class="octicon octicon-link"></span></a>Job Graph</h3>
 
 <p>A job is a combination of a channels hooked up together in a workflow via a function graph.</p>
 
@@ -128,8 +136,10 @@ emailing/messaging/storing results</p>
 
 <p>Instead of using a complicated mix of plugins we try to use  clojure libraries and mechanisms in the language itself to replicate the functionality of jenkins.</p>
 </li>
-</ul><h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>One of the nice things is that when you build a job by invoking the compiled function graph is that it returns almost immediately.</p>
 
@@ -142,20 +152,27 @@ emailing/messaging/storing results</p>
 that then get compiled and run in the containing environment</p></li>
 <li><p>A compiled graph function when run is a complete state machine transforming in a series of well defined steps an artifact into anothor artifact or action result.</p></li>
 <li><p>The server upon when distributing work dispatches the job along with a channel that streams the job information back to the server.</p></li>
-</ul><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>Copyright © 2014 FIXME</p>
 
 <p>Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Spankins maintained by <a href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
