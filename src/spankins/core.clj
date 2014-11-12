@@ -8,8 +8,8 @@
   (riemann.client/send-event monitoring-bus {:service "builds" :state "success" :tags["jobs"]
 }))
 )
-
 ;;(def monitoring-bus (tcp-client :host monitoring-uri :port monitoring-port))
+
 
 ;; A placeholder approximation of application's state
 (def state (atom {}))
@@ -17,7 +17,6 @@
 (defn init
   [args]
   (swap! state assoc :running true))
-
 
 (defn start
   []

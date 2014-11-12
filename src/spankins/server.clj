@@ -10,7 +10,6 @@
 
 (defn clone-repo [commit-hash] {:commit-hash commit-hash})
 
-
 (comment
 (def base-job-logic
   {:parameters (fnk [opts] {:output opts
@@ -40,6 +39,7 @@
 (defn log [message] (println message))
 
 (defn server-logic
+
   "All the clients: semi-autonomous jobs, user interface, communicate back to this server
    which operates with the logic defined by a commnicating sequence of of processes routed
    through a dispatch table."

@@ -332,20 +332,6 @@
 
 
 
-  (xml/emit d)
-  This set of macros corresponds to the different components in the job graph.
-  Each macro takes an unevaluated job-graph and some code that is linked to a
-  event tag.
-
-
-(defmacro properties)
-(defmacro scm)
-(defmacro trigger)
-(defmacro pre-build)
-(defmacro build)
-(defmacro post-build)
-(defmacro publisher)
-
 (defmacro job
   "Top level continuous integration construct that is used to host runs of builds"
   [{:keys [name commit-hash] :as args}]

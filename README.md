@@ -28,14 +28,15 @@ A jenkins inspired continuous integration
   10. A living piece of software that you improve and customize but there is no magic places.
 
   Things to note.
-
   * hierarchy of composable maps results in a customized "jenkins job"
   * cascading hierarcies achieved using multimethods
-
-
-  The control level of the software uses channel operation fuctions.
   
 ## Parts of the Solution
+=======
+  The control level of the software uses channel operation fuctions.
+  
+## Terms  
+
 
 ### Server
 * Server doesn't do any job specific stuff all of that is left to the invoked compiled function graphs (ICFG).  Similar to jenkins and its plugins
@@ -59,23 +60,13 @@ A jenkins inspired continuous integration
 One of the central ideas of this approach is that a use of this program forks this projects and ads there changes as adaptations to the code.   This way there aren't any plugins just include the library in the project dependencies and use it as you see fit.  The point of the DSL is that it is runable code and can be part of an application. This application is for managing your infrastructure.  
 
 ### DSL
+=======
+
 A set of composable macros that build out the stages of the jobs workflow and in the end create a job graph
 
 
 ### Job Graph 
 A job is a combination of a channels hooked up together in a workflow via a function graph.
-
-The building of a jenkins job as invoking a compiled job graph function
-Channels are some of the things returned from function call.
-These channels are used to communicate with job.
-
-Provides a lightweight framework within which you place 
-
-* The raw job can passed to and returned from functions and channels
-* The job graphs return immediately when the compiled function is called.  
-* All the synchronization of the build work flow a job specifies is done through channels.
-* Communication  between stages happens via the channels.
-* The job graph keys may be channels, maps of channels or any other clojure data structure.
 
 * selecting a branch
 * cloning git repo
@@ -90,6 +81,20 @@ Provides a lightweight framework within which you place
 
   Each of these stages can be implemented in a go block and perhaps within a  while loop that will terminate 
   as a result of completing an action or receiving a control message from a channel or a channel closing.
+
+The building of a jenkins job as invoking a compiled job graph function
+Channels are some of the things returned from function call.
+These channels are used to communicate with job.
+
+Provides a lightweight framework within which you place no extra technology just a simple extendable distributed programs for running the relivant commands in the right environment  since each step relies on the previous results we can use a function graph.  Viewing the building of a jenkins job as function graph calling of a compiled function graph provides a lightweight framework within which you place your various jenkins type activities.
+
+
+* The raw job can passed to and returned from functions and channels
+* The job graphs return immediately when the compiled function is called.  
+* All the synchronization of the build work flow a job specifies is done through channels.
+* Communication  between stages happens via the channels.
+* The job graph keys may be channels, maps of channels or any other clojure data structure.
+
   
   The function returns almost immediately; however, within on function calls multiple 
   go routines may have been started and are running.  
@@ -99,6 +104,7 @@ Provides a lightweight framework within which you place
 
 Instead of using a complicated mix of plugins we try to use clojure libraries and mechanisms in the 
 language itself to replicate the functionality of jenkins.
+
 
 ## Usage
 
@@ -343,6 +349,8 @@ We need to define what happens where:
   postbuilders (maven only, configured like Builders)
   publishers/reporters/notifications
 
+=======
+>>>>>>> 29be8041d0459fac4b7774d2820147fd27058ede
 ## License
 
 Copyright © 2014 FIXME
