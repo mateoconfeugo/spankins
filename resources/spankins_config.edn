@@ -1,0 +1,14 @@
+{
+ :sql-statements "spankins/model/sql/queries.sql"
+ :export {:output-dir "resources/publish/output"}
+ :javascript {:3rd-party "resources/public/js/lib"
+              :css "resources/public/css"
+              :images "resources/public/css"}
+ :cljs "resources/public/"
+ :spankins-daemon-port "10033"
+ :spankins-daemon-host "23.253.227.59"
+ :monitor-uri "localhost"
+ :spankins-dsn {:classname "org.sqlite.JDBC"
+                :subprotocol "sqlite"
+                :subname "spankins.sqlite"}
+ }

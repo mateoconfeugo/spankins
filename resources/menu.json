@@ -1,0 +1,14 @@
+{
+    "drop_down_menu":
+    [
+        {"drop_down_menu_name":"Jobs",
+         "menu_item":[
+             {"menu_item_url":"/Current", "menu_item_text":"Current Jobs"},
+             {"menu_item_url":"/Recent", "menu_item_text":"Recently Ran"},
+             {"menu_item_url":"/projects", "menu_item_text":"View Projects"}]},
+        {"drop_down_menu_name":"Report",
+         "menu_item":[
+             {"menu_item_url":"/health", "menu_item_text":"Health"},
+             {"menu_item_url":"/summary", "menu_item_text":"Summary"}]}
+    ]
+}
