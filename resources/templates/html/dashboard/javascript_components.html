@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="title" content="SiteBuilder - For Optimized Landing Sites" />
+    <meta name="description" content="LayoutIt! is a drag-and-drop interface builder" />
+    <meta name="keywords" content="" />
+    <meta name="language" content="en" />
+    <script type="text/javascript">var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);</script>
+    <title>SiteBuilder - For Optimized Landing Sites</title>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="/css/layoutit.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+	<script src="/js/html5shiv.js"></script>
+	<![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/img/favicon.png">
+  </head>
+  <body class="edit">
+    <ul class="nav nav-list accordion-group">
+      <li class="nav-header">
+	<div class="pull-right popover-info"><i class="icon-question-sign "></i> 
+	  <div class="popover fade right"><div class="arrow"></div> 
+ 	    <h3 class="popover-title">Help</h3> 
+ 	    <div class="popover-content">Drag &amp; Drop the elements inside the columns where you want to insert it. And from there, you can configure the style of that javascript. If you need more info please visit  <a target="_blank" href="http://twitter.github.io/bootstrap/javascript.html">JavaScript.</a></div></div> 
+	</div>
+	<i class="icon-plus icon-white"></i> JavaScript 
+      </li>
+      <li class="boxes mute rows" id="elmJS">
+	<div class="box box-element">
+	  <a href="build#close" class="remove label label-important"><i class="icon-remove icon-white"></i>remove</a>
+	  <span class="drag label"><i class="icon-move"></i>drag</span>
+	  <div class="preview">Modal</div>
+	  <div class="view">
+	    <!-- Button to trigger modal -->
+	    <a id="myModalLink" href="build#myModalContainer" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+	    
+	    <!-- Modal -->
+	    <div id="myModalContainer" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Modal header</h3>
+	      </div>
+	      <div class="modal-body">
+		<p>One fine body…</p>
+	      </div>
+	      <div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<button class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="box box-element">
+	  <a href="build#close" class="remove label label-important"><i class="icon-remove icon-white"></i>remove</a>
+	  <span class="drag label"><i class="icon-move"></i>drag</span>
+	  <span class="configuration">
+	    <a class="btn btn-mini" href="build#" rel="navbar-inverse">Inverse</a>
+	    <!--a class="btn btn-mini" href="#" rel="navbar-fixed-top">Navbar fixed top</a-->
+	  </span>
+	  <div class="preview">Navbar</div>
+	  <div class="view">
+	    <div class="navbar">
+	      <div class="navbar-inner">
+		<div class="container-fluid">
+		  <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar">
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </a>
+		  <a href="build#" class="brand" contenteditable="true">Title</a>
+		  <div class="nav-collapse collapse navbar-responsive-collapse">
+		    <ul class="nav" contenteditable="true">
+		      <li class="active"><a href="build#">Home</a></li>
+		      <li><a href="build#">Link</a></li>
+		      <li><a href="build#">Link</a></li>
+		      <li class="dropdown">
+			<a data-toggle="dropdown" class="dropdown-toggle" href="build#">Dropdown <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+			  <li><a href="build#">Action</a></li>
+			  <li><a href="build#">Another action</a></li>
+			  <li><a href="build#">Something else here</a></li>
+			  <li class="divider"></li>
+			  <li class="nav-header">Nav header</li>
+			  <li><a href="build#">Separated link</a></li>
+			  <li><a href="build#">One more separated link</a></li>
+			</ul>
+		      </li>
+		    </ul>
+		    <ul class="nav pull-right" contenteditable="true">
+		      <li><a href="build#">Link</a></li>
+		      <li class="divider-vertical"></li>
+		      <li class="dropdown">
+			<a data-toggle="dropdown" class="dropdown-toggle" href="build#">Dropdown <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+			  <li><a href="build#">Action</a></li>
+			  <li><a href="build#">Another action</a></li>
+			  <li><a href="build#">Something else here</a></li>
+			  <li class="divider"></li>
+			  <li><a href="build#">Separated link</a></li>
+			</ul>
+		      </li>
+		    </ul>
+		  </div><!-- /.nav-collapse -->
+		</div>
+	      </div><!-- /navbar-inner -->
+	    </div>
+	  </div>
+	</div>
+	<div class="box box-element">
+	  <a href="build#close" class="remove label label-important"><i class="icon-remove icon-white"></i>remove</a>
+	  <span class="drag label"><i class="icon-move"></i>drag</span>
+	  <span class="configuration">
+	    <span class="btn-group">
+	      <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="build#">Position <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+		<li class="active" ><a href="build#" rel="">Default</a></li>
+		<li class="" ><a href="build#" rel="tabs-below">Bottom</a></li>
+		<li class="" ><a href="build#" rel="tabs-left">Left</a></li>
+		<li class="" ><a href="build#" rel="tabs-right">Right</a></li>
+	      </ul>
+	    </span>
+	  </span>
+	  <div class="preview">Tabs</div>
+	  <div class="view">
+	    <div class="tabbable" id="myTabs"> <!-- Only required for left/right tabs -->
+	      <ul class="nav nav-tabs">
+		<li class="active"><a href="build#tab1" data-toggle="tab" contenteditable="true">Section 1</a></li>
+		<li><a href="build#tab2" data-toggle="tab" contenteditable="true">Section 2</a></li>
+	      </ul>
+	      <div class="tab-content">
+		<div class="tab-pane active" id="tab1">
+		  <p contenteditable="true">I'm in Section 1.</p>
+		</div>
+		<div class="tab-pane" id="tab2">
+		  <p contenteditable="true">Howdy, I'm in Section 2.</p>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="box box-element">
+	  <a href="build#close" class="remove label label-important"><i class="icon-remove icon-white"></i>remove</a>
+	  <span class="drag label"><i class="icon-move"></i>drag</span>
+	  <span class="configuration">
+	    <span class="btn-group">
+	      <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="build#">Styles <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+		<li class="active" ><a href="build#" rel="">Default</a></li>
+		<li class="" ><a href="build#" rel="alert-info">Info</a></li>
+		<li class="" ><a href="build#" rel="alert-error">Error</a></li>
+		<li class="" ><a href="build#" rel="alert-success">Success</a></li>
+	      </ul>
+	    </span>
+	  </span>
+	  <div class="preview">Alerts</div>
+	  <div class="view">
+	    <div class="alert" contenteditable="true">
+	      <button type="button" class="close" data-dismiss="alert">&times;</button>
+	      <h4>Alert!</h4>
+	      <strong>Warning!</strong> Best check yo self, you're not looking too good.
+	    </div>
+	  </div>
+	</div>
+	<div class="box box-element">
+	  <a href="build#close" class="remove label label-important"><i class="icon-remove icon-white"></i>remove</a>
+	  <span class="drag label"><i class="icon-move"></i>drag</span>
+	  <div class="preview">Accordion</div>
+	  <div class="view">
+	    <div class="accordion" id="myAccordion">
+	      <div class="accordion-group">
+		<div class="accordion-heading">
+		  <a class="accordion-toggle" data-toggle="collapse" data-parent="#myAccordion" href="build#collapseOne">
+		    Collapsible Group Item #1
+		  </a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse in">
+		  <div class="accordion-inner">
+		    Anim pariatur cliche...
+		  </div>
+		</div>
+	      </div>
+	      <div class="accordion-group">
+		<div class="accordion-heading">
+		  <a class="accordion-toggle" data-toggle="collapse" data-parent="#myAccordion" href="build#collapseTwo">
+		    Collapsible Group Item #2
+		  </a>
+		</div>
+		<div id="collapseTwo" class="accordion-body collapse">
+		  <div class="accordion-inner">
+		    Anim pariatur cliche...
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="box box-element">
+	  <a href="build#close" class="remove label label-important"><i class="icon-remove icon-white"></i>remove</a>
+	  <span class="drag label"><i class="icon-move"></i>drag</span>
+	  <div class="preview">Carousel</div>
+	  <div class="view">
+	    <div class="carousel slide" id="myCarousel">
+	      <ol class="carousel-indicators">
+		<li class="active" data-slide-to="0" data-target="#myCarousel"></li>
+		<li data-slide-to="1" data-target="#myCarousel" class=""></li>
+		<li data-slide-to="2" data-target="#myCarousel" class=""></li>
+	      </ol>
+	      <div class="carousel-inner">
+		<div class="item active">
+		  <img alt="" src="http://lorempixel.com/1600/500/sports/1">
+		  <div class="carousel-caption">
+		    <h4>First Thumbnail label</h4>
+		    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		  </div>
+		</div>
+		<div class="item">
+		  <img alt="" src="http://lorempixel.com/1600/500/sports/2">
+		  <div class="carousel-caption">
+		    <h4>Second Thumbnail label</h4>
+		    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		  </div>
+		</div>
+		<div class="item">
+		  <img alt="" src="http://lorempixel.com/1600/500/sports/3">
+		  <div class="carousel-caption">
+		    <h4>Third Thumbnail label</h4>
+		    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		  </div>
+		</div>
+	      </div>
+	      <a data-slide="prev" href="build#myCarousel" class="left carousel-control">‹</a>
+	      <a data-slide="next" href="build#myCarousel" class="right carousel-control">›</a>
+	    </div>		
+	  </div>
+	</div>
+      </li>
+    </ul>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/touchpunch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.htmlClean.js"></script>
+    <script type="text/javascript" src="/js/selector_utils.js"></script>
+    <script type="text/javascript" src="/out/goog/base.js"></script>
+    <script type="text/javascript" src="/js/main-debug.js"></script>
+    <script type="text/javascript" src="/js/layout_manager.js"></script>
+  </body>
+</html>

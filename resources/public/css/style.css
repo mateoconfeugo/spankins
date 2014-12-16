@@ -1,0 +1,28 @@
+article {
+    background: hsl(0, 0%, 93%);
+    padding: 60px;
+    margin-bottom: 30px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+#navbar {
+    padding: 20px;
+    background: black;
+}
+
+#rootwizard {
+    float: right;
+}
+
+footer {
+    padding: 40px;
+    background: red;
+    clear: both;
+}
+
+
+#sidebar div {
+    padding: 20px;
+}
