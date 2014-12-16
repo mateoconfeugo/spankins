@@ -11,8 +11,15 @@
                 :menu (parse-stream (clojure.java.io/reader "resources/menu.json") true)})
 
 (defn dispatch-job
-  [type])
+  [type]
+  (response "test dispatching job"))
+
+(defn dispatch-report
+  [type]
+  (response "test dispatching report"))
+
 
 (defroutes site-routes
   (GET "/" [] (render-dom site-data))
-  (GET "/job" [type] (dispatch-job type)))
+  (GET "/job" [type] (dispatch-job type))
+  (GET "/report" [type] (dispatch-report type)))

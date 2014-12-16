@@ -7,7 +7,7 @@
   :aot :all
   :uberjar-name "spankins-0.1.0-standalone.jar"
   :jvm-opts ["-Xmx2g" "-server" "-XX:MaxPermSize=1g" "-XX:+CMSClassUnloadingEnabled"]
-  :ring {:handler spankins.handler/request-handler :auto-reload? true :auto-refresh true}
+  :ring {:handler spankins.server/-main :auto-reload? true :auto-refresh true}
   :dependencies [[org.clojure/clojure "1.6.0"] ; lisp and so much more on the jvm
                  [incanter/incanter-core "1.5.5"] ; statistics mathmatics package
                  [craygo/clj-google-spreadsheet "0.1.0"]
@@ -54,8 +54,8 @@
                  [ring-mock "0.1.5"]
                  [ring/ring-devel "1.2.1"]
                  [ch.qos.logback/logback-classic "1.0.9"]] ; filesystem utils
-  :uberimage {:instructions ["RUN apt-get update && apt-get -y dist-upgrade && apt-get install sqlite3"]
-              :tag "mateoconfeugo/ltd"}
+  :uberimage {:instructions ["RUN apt-get update && apt-get -y dist-upgrade && apt-get install sqlite3 default-jre-headless"]
+              :tag "mateoconfeugo/spankins"}
   :profiles  {:dev {:dependencies [[expectations "1.4.56"]
                                    [ring-mock "0.1.5"]
                                    [ring/ring-devel "1.2.1"]]
@@ -72,7 +72,7 @@
   :plugins [[lein-ancient "0.5.4"]
             [lein-ring "0.8.6"] ;; run ring server via lein
             [lein-cljsbuild "1.0.3"] ;;  make ClojureScript development easy
-            [com.palletops/uberimage "0.3.0"]
+            [com.palletops/uberimage "0.3.0"] ;; Make a docker image
             [s3-wagon-private "1.1.2"] ;; uses AWS s3 bucket as a private repo for jars
             [lein-expectations "0.0.7"] ;; run expections via lein
             [lein-marginalia "0.7.1"] ;; literate programming documentation genration
