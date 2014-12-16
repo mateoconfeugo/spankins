@@ -1,9 +1,37 @@
 # spankins
 
-A jenkins inspired continuous integration
+Continuous Integration/Delivery/Deployment Domain Specific Language (DSL) runnning in the context of a forked github webapp server project.
 
+Usage:
 
+[spankins "0.1.0"]
 
+;; In your ns statement:
+(ns my.ns
+  (:require [spankins.core :refer :all]))
+
+Example of a DSL to perform a CI type task:
+
+This particular task upon a commit to a branch in git hub create an uberjar and deploy the uberjar emailing and creating the neccessary reports.
+
+  (def ci-spec (job                                                                                                           
+                (parameters :commit :release)                                                                                 
+                (scm :git (:commit parameters))                                                                               
+                (build                                                                                                        
+                 (step                                                                                                        
+                     (>! monitor "compiling app")                                                                             
+                     (pprint "lein compile"))                                                                                 
+                 (step (pprint "lein test"))                                                                                
+                 (step (pprint "lein uberjar"))                                                                             
+                 (step (pprint "lein deploy private"))                                                                      
+                 (step (pprint "lien pallet up")))                                                                            
+                 (publishers                                                                                                  
+                   (publish (email "a@b.com"))                                                                                
+                   (publish (report                                                                                           
+                               (let [results (<! build-results)]                                                              
+                                 create-report)))))) 
+
+The project is an out growth of experience gained working with Jenkins/hudson.
 
 * Why?
   some of the problems with jenkins:
@@ -17,6 +45,7 @@ A jenkins inspired continuous integration
   7. So many steps
   8. difficult for developers to run on their own.
   9. We should be simplifing the process not adding to the complexity
+  10. Command line tools are slow and limited.
 
   The hope of all this is
   1. Simple to understand continuous integration program that is flexibly and easy to maintain and understand
@@ -25,12 +54,13 @@ A jenkins inspired continuous integration
   4. Easy to make new job types out of function graphs and easy to customize these types.
   5. Everything in one language clojure versus jenkins java, jelly, xml, groovy
   6. Plugins are just functions/graphs
-  7. Debuggable
+  7. Debuggable/REPL I use cider 
   8. Work on interactively
   9. Handle very high concurrent load
   10. A living piece of software that you improve and customize but there is no magic places.
-
-  Things to note.
+  11. A versionable, rollbackable configuration system.
+  
+Things to note.
   * hierarchy of composable maps results in a customized "jenkins job"
   * cascading hierarcies achieved using multimethods
   
@@ -353,7 +383,7 @@ We need to define what happens where:
   publishers/reporters/notifications
 
 =======
->>>>>>> 29be8041d0459fac4b7774d2820147fd27058ede
+
 ## License
 
 Copyright © 2014 FIXME
