@@ -2,6 +2,9 @@
 
 A jenkins inspired continuous integration
 
+
+
+
 * Why?
   some of the problems with jenkins:
 
