@@ -5,10 +5,17 @@
              [spankins.config :refer [cfg]])
   (:gen-class :implements [org.apache.commons.daemon.Daemon]))
 
-;; A placeholder approximation of application's state
+(def monitoring-bus (tcp-client :host (:monitor-host cfg)  :port (:monitor-port cfg)))
 (def state (atom {}))
+
 (defn init [args] (swap! state assoc :running true))
-(defn start [] (spankins.server/start-app (:spankins-daemon-host cfg) (Integer/parseInt (or (System/getenv "PORT") (:spankins-daemon-port cfg)))))
+
+(defn start []
+  (do
+    (spankins.server/start-app (:spankins-daemon-host cfg) (:spankins-daemon-port cfg)))
+    (if-let [monitoring-bus (try (tcp-client) (catch java.io.IOException e))]
+      (riemann.client/send-event monitoring-bus {:service "spankins-daemon started" :state "info" :tags["spankins-daemon"]})))
+
 (defn stop []  (swap! state assoc :running false))
 
 ;; Daemon implementation
@@ -19,8 +26,3 @@
 
 ;; Enable command-line invocation
 (defn -main [& args] (init args) (start))
-
-(comment
-  (def monitoring-bus (tcp-client :host monitoring-uri :port monitoring-port))
-  (if-let [monitoring-bus (try (tcp-client) (catch IOException e))]
-    (riemann.client/send-event monitoring-bus {:service "builds" :state "success" :tags["jobs"]})))

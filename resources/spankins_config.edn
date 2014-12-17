@@ -5,9 +5,10 @@
               :css "resources/public/css"
               :images "resources/public/css"}
  :cljs "resources/public/"
- :spankins-daemon-port "10033"
- :spankins-daemon-host "23.253.227.59"
- :monitor-uri "localhost"
+ :spankins-daemon-port 10333
+ :spankins-daemon-host "localhost"
+ :monitor-host "localhost"
+ :monitor-port 5555
  :spankins-dsn {:classname "org.sqlite.JDBC"
                 :subprotocol "sqlite"
                 :subname "spankins.sqlite"}
