@@ -6,6 +6,7 @@
 
 (defn start-app
   [host port]
+
   (run-jetty request-handler {:host host :port port :join? false}))
 
 (defn -main  []
