@@ -1,37 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Spankins : a Jenkins inspired continuous integration server and DSL">
+    <title>Spankins by mateoconfeugo</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Spankins</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Spankins</h1>
+        <p class="header">a Jenkins inspired continuous integration server and DSL</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/mateoconfeugo/spankins">View on GitHub</a>
-
-          <h1 id="project_title">Spankins</h1>
-          <h2 id="project_tagline">a Jenkins inspired continuous integration server and DSL</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/mateoconfeugo/spankins/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/mateoconfeugo/spankins/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
         <ul>
+          <li class="download"><a class="buttons" href="https://github.com/mateoconfeugo/spankins/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/mateoconfeugo/spankins/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/mateoconfeugo/spankins">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="spankins" class="anchor" href="#spankins" aria-hidden="true"><span class="octicon octicon-link"></span></a>spankins</h1>
+
+<p>Continuous Integration/Delivery/Deployment Domain Specific Language (DSL) runnning in the context of a forked github webapp server project.</p>
+
+<p>Usage:</p>
+
+<p>[spankins "0.1.0"]</p>
+
+<p>;; In your ns statement:
+(ns my.ns
+  (:require [spankins.core :refer :all]))</p>
+
+<p>Example of a DSL to perform a CI type task:</p>
+
+<p>This particular task upon a commit to a branch in git hub create an uberjar and deploy the uberjar emailing and creating the neccessary reports.</p>
+
+<p>(def ci-spec (job<br>
+                (parameters :commit :release)<br>
+                (scm :git (:commit parameters))<br>
+                (build<br>
+                 (step<br>
+                     (&gt;! monitor "compiling app")<br>
+                     (pprint "lein compile"))<br>
+                 (step (pprint "lein test"))<br>
+                 (step (pprint "lein uberjar"))<br>
+                 (step (pprint "lein deploy private"))<br>
+                 (step (pprint "lien pallet up")))<br>
+                 (publishers<br>
+                   (publish (email "<a href="mailto:a@b.com">a@b.com</a>"))<br>
+                   (publish (report<br>
+                               (let [results (&lt;! build-results)]<br>
+                                 create-report)))))) </p>
+
+<p>The project is an out growth of experience gained working with Jenkins/hudson.</p>
+
+<ul>
 <li>
 <p>Why?
 some of the problems with jenkins:</p>
@@ -46,20 +81,26 @@ some of the problems with jenkins:</p>
 <li>So many steps</li>
 <li>difficult for developers to run on their own.</li>
 <li>We should be simplifing the process not adding to the complexity</li>
+<li>Command line tools are slow and limited.</li>
 </ol>
 
 <p>The hope of all this is</p>
+
+<ul>
+<li>Simple to understand continuous integration program that is flexibly and easy to maintain and understand</li>
+<li>Lightweight -  okay,  its running on the jvm but compared to a typical jenkins install with all its plugins</li>
+<li>Very fast compared to anything.</li>
+<li>Easy to make new job types out of function graphs and easy to customize these types.</li>
+<li>Everything in one language clojure versus jenkins java, jelly, xml, groovy</li>
+<li>Plugins are just functions/graphs</li>
+<li>Debuggable/REPL I use cider </li>
+<li>Work on interactively</li>
+<li>Handle very high concurrent load</li>
+<li>A living piece of software that you improve and customize but there is no magic places.</li>
+<li>A versionable, rollbackable configuration system.</li>
+</ul>
 </li>
-<li><p>Simple to understand continuous integration program that is flexibly and easy to maintain and understand</p></li>
-<li>   Lightweight -  okay,  its running on the jvm but compared to a typical jenkins install with all its plugins</li>
-<li>   Very fast compared to anything.</li>
-<li>   Easy to make new job types out of function graphs and easy to customize these types.</li>
-<li>   Everything in one language clojure versus jenkins java, jelly, xml, groovy</li>
-<li>   Plugins are just functions/graphs</li>
-<li>   Debuggable</li>
-<li>   Work on interactively</li>
-<li>
-<p>Handle very high concurrent load</p>
+</ul>
 
 <p>Things to note.</p>
 
@@ -68,9 +109,12 @@ some of the problems with jenkins:</p>
 <li>cascading hierarcies achieved using multimethods</li>
 </ul>
 
+<h2>
+<a id="parts-of-the-solution" class="anchor" href="#parts-of-the-solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parts of the Solution</h2>
+
+<h1></h1>
+
 <p>The control level of the software uses channel operation fuctions.</p>
-</li>
-</ul>
 
 <h2>
 <a id="terms" class="anchor" href="#terms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terms</h2>
@@ -85,7 +129,7 @@ some of the problems with jenkins:</p>
 <li>
 <p>"Jenkins" server stuff is mainly built using core.async core.match  function graph and pallet if necessary</p>
 
-<p>So how does this work</p>
+<p>So how do this work</p>
 
 <ol>
 <li>Developer check in code and triggers a hook</li>
@@ -102,7 +146,14 @@ some of the problems with jenkins:</p>
 </ul>
 
 <h3>
+<a id="how-do-you-uses-this" class="anchor" href="#how-do-you-uses-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do you uses this?</h3>
+
+<p>One of the central ideas of this approach is that a use of this program forks this projects and ads there changes as adaptations to the code.   This way there aren't any plugins just include the library in the project dependencies and use it as you see fit.  The point of the DSL is that it is runable code and can be part of an application. This application is for managing your infrastructure.  </p>
+
+<h3>
 <a id="dsl" class="anchor" href="#dsl" aria-hidden="true"><span class="octicon octicon-link"></span></a>DSL</h3>
+
+<h1></h1>
 
 <p>A set of composable macros that build out the stages of the jobs workflow and in the end create a job graph</p>
 
@@ -111,8 +162,29 @@ some of the problems with jenkins:</p>
 
 <p>A job is a combination of a channels hooked up together in a workflow via a function graph.</p>
 
-<p>no extra technology just a simple extendable distributed programs for running the relivant commands in the right environment
-  since each step relies on the previous results we can use a function graph.  Viewing the building of a jenkins job as function graph calling of a compiled function graph provides a lightweight framework within which you place your various jenkins type activities.</p>
+<ul>
+<li>selecting a branch</li>
+<li>cloning git repo</li>
+<li>compiling</li>
+<li>triggering other builds</li>
+<li>unit testing</li>
+<li>component testing</li>
+<li>acceptance testing</li>
+<li>generating reports</li>
+<li>deploying applications</li>
+<li>
+<p>emailing/messaging/storing results</p>
+
+<p>Each of these stages can be implemented in a go block and perhaps within a  while loop that will terminate 
+as a result of completing an action or receiving a control message from a channel or a channel closing.</p>
+</li>
+</ul>
+
+<p>The building of a jenkins job as invoking a compiled job graph function
+Channels are some of the things returned from function call.
+These channels are used to communicate with job.</p>
+
+<p>Provides a lightweight framework within which you place no extra technology just a simple extendable distributed programs for running the relivant commands in the right environment  since each step relies on the previous results we can use a function graph.  Viewing the building of a jenkins job as function graph calling of a compiled function graph provides a lightweight framework within which you place your various jenkins type activities.</p>
 
 <ul>
 <li>The raw job can passed to and returned from functions and channels</li>
@@ -123,20 +195,16 @@ some of the problems with jenkins:</p>
 <li>
 <p>The job graph keys may be channels, maps of channels or any other clojure data structure.</p>
 
-<p>selecting a branch
-cloning git repo
-compiling
-triggering other builds
-unit testing
-component testing
-acceptance testing
-generating reports
-deploying applications
-emailing/messaging/storing results</p>
+<p>The function returns almost immediately; however, within on function calls multiple 
+go routines may have been started and are running.  </p>
 
-<p>Instead of using a complicated mix of plugins we try to use  clojure libraries and mechanisms in the language itself to replicate the functionality of jenkins.</p>
+<p>Interacting with these running jobs is accomplished by sending and recieving messages via 
+the channels returned from the function call.</p>
 </li>
 </ul>
+
+<p>Instead of using a complicated mix of plugins we try to use clojure libraries and mechanisms in the 
+language itself to replicate the functionality of jenkins.</p>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
@@ -151,8 +219,254 @@ emailing/messaging/storing results</p>
 <li><p>Since a job is represented as a clojure map of defnk type functions  we can easily move this around to different workers
 that then get compiled and run in the containing environment</p></li>
 <li><p>A compiled graph function when run is a complete state machine transforming in a series of well defined steps an artifact into anothor artifact or action result.</p></li>
-<li><p>The server upon when distributing work dispatches the job along with a channel that streams the job information back to the server.</p></li>
+<li>
+<p>The server upon when distributing work dispatches the job along with a channel that streams the job information back to the server.</p>
+
+<h2>
+<a id="how-the-dsl-works" class="anchor" href="#how-the-dsl-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How the DSL works</h2>
+
+<p>The audience for this DSL is devops engineers who need to create
+complex automated asynchronous workflows comprising of many tasks.</p>
+
+<p>Often devops tasks take a lot of time with many parts. Most of the time is spent
+setting up environments, compiling and moving data around - the
+actual logic that sets these things in motion is fairly small and
+executes quickly.</p>
+
+<p>This continuous itegration/delivery job macro set simplifies the process
+of writing asynchronous ci related tasks by providing  a customized language.
+devops engineers can check this in and use it with other code.</p>
+
+<p>Extending the clojure language allows ci related tasks to be
+integrated into the rest of the infrastructure orchastration as needed.
+There is no need for a centralized server although this is possible if that
+is what is desire (usually it is)</p>
+
+<p>The extendsions to the language to create the dsl using macros,
+function graphs  go routines and channels</p>
+
+<p>LAYERS in DSL-driven system.</p>
+
+<hr>
+
+<h2>
+<a id="-------------------------domain-specific-code" class="anchor" href="#-------------------------domain-specific-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>                         Domain Specific code</h2>
+
+<h2>
+<a id="-------------------------runtime-for-dsl-code" class="anchor" href="#-------------------------runtime-for-dsl-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>                         Runtime for DSL code</h2>
+
+<h2>
+<a id="-------higher-level-entities-----a-data-and-b-control" class="anchor" href="#-------higher-level-entities-----a-data-and-b-control" aria-hidden="true"><span class="octicon octicon-link"></span></a>       Higher-level entities   - A: data and B: control</h2>
+
+<h2>
+<a id="-a-domain-specific-data-structures--b-domain-specific-control-structures" class="anchor" href="#-a-domain-specific-data-structures--b-domain-specific-control-structures" aria-hidden="true"><span class="octicon octicon-link"></span></a> A: Domain-specific data structures | B: Domain-specific control structures</h2>
+
+<h2>
+<a id="--------------------low-lev-domain-primitives" class="anchor" href="#--------------------low-lev-domain-primitives" aria-hidden="true"><span class="octicon octicon-link"></span></a>                    Low-lev domain primitives</h2>
+
+<h2>
+<a id="--------------------------clojure" class="anchor" href="#--------------------------clojure" aria-hidden="true"><span class="octicon octicon-link"></span></a>                          Clojure</h2>
+
+<p>The dsl spec  creates a workflow function 
+This function, when invoked will create an instance of a set of
+communicating sequential processes that implement the asynchronous workflow  .
+The communication sequeantial processes are implemented using channels and go routines .</p>
+
+<p>The worflow function  is non-blocking and returns the running job  immediately in the form of a map 
+This map  has keys some which are properties others which are channels.
+The workflow communicates with its environment via these channels</p>
+
+<p>The as the workflow job progresses it passes messages
+These messages  contain data and sometimes channels</p>
+
+<p>Along with expanding out all the pieces of user supplied dsl, the job macro
+inserts a dispatcher  that handles all the control logic.</p>
+
+<p>The dispatcher  stitches together the auxliary channel handling with the user
+specified dsl forms</p>
+
+<hr>
+
+<p> Domain Specific code
+   (job :some-job
+        (build</p>
+
+<h2>
+<a id="-----------step---monitor--message-ping" class="anchor" href="#-----------step---monitor--message-ping" aria-hidden="true"><span class="octicon octicon-link"></span></a>           (step  (&gt;! $monitor  {:message :ping}))))</h2>
+
+<p> Runtime for DSL code:
+(def job-obj (new-some-job {:settings nil}))
+(def run-results (build job-object parameters))</p>
+
+<hr>
+
+<p>       Higher-level entities   - A: data and B: control
+(def job-graph {:parameters (fnk [commit-hash] {:commit comit-hash})
+                :input (chan)
+                :output (chan)
+                :error (chan)</p>
+
+<p>There need to be some rules that reflect the causal nature of reality.
+ scm releated activies must preceed build activies that must preceed publish
+ process.
+ These things are inherent in a sequential workflow process.</p>
+
+<p>This is a degenerate case; however, with channels it is possible to introduce
+ feedback into this system such that up building and having the build step fail
+ it could prompt the scm sequence task to run again if there is a new version of
+ release next and try to continue the build from there.</p>
+
+<hr>
+
+<p> A: Domain-specific data structures | B: Domain-specific control structures</p>
+
+<p>The job is a set of tasks executed in sequence, each part in the sequence
+is realized by a (fnk<a href="go%20(while%20true%20(do%20%7E@stuff))"></a>)  lets call them
+fnking go do stuff functions (FGDSF) type connected
+to a map key.  This map  will yield a set of channels for the sequence</p>
+
+<p>{:input in
+ :output out
+ :error error}</p>
+
+<p>So this what each of the fnking go do stuff functions runs an endless
+loop hosted in a go routine but the function returns immediately a map
+of three channels</p>
+
+<p>The parameters that can be passed into a build of a job are described as vector of keyworks
+(parameters [:commit-hash :time :use-spot-instance?])</p>
+
+<p>Intermediate data structure:
+This is what gets generated as the DSL is walked.  It is from this that the function graphs
+is constructed.</p>
+
+<p>(def materials {:in (chan)
+ :out (chan)
+ :error (chan)
+ :monitor (chan)
+ :parameters [:commit-hash :time :use-spot-instance?]
+ :properties [:environment]
+ :build {:steps [...]}
+ :publisher [...]})</p>
+
+<p>(def job-spec-graph (build-job-graph materials))</p>
+
+<p>B:
+Message Package [:event-token {:message }]
+This gets put into and taken from channels</p>
+
+<p>The dispatcher gets the message package along with channel that sent
+the message.</p>
+
+<p>Channels are used to route the data between the different workflow
+processes (go routines).</p>
+
+<p>The message package's event token is what will trigger the dispatch
+routing.</p>
+
+<p>These go routines are started when the compiled function graph is run
+each of these functions will run listening to its input channels and
+returning the the results of its processing into the output</p>
+
+<p>Fking go do stuff  for a while functions:</p>
+
+<p>This is where the magic offered by the dsl is realized.</p>
+
+<hr>
+
+<p>                    Low-lev domain primitives
+core.async - channels, go routines
+plumbing.graph - dnk, function graphs
+core.match - dispatch table</p>
+
+<hr>
+
+<p>                          Clojure
+Actual code of doing the task.  Everything else is convience and idomatic
+easy of passing data and control to the appropriate sequence.</p>
+
+<hr>
+</li>
 </ul>
+
+<h2>
+<a id="explanation-why-using-this-approach" class="anchor" href="#explanation-why-using-this-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explanation why using this approach</h2>
+
+<p>Lisp is a local maximum in the space of programming languages, because it can do arbitary code transformation
+  of clojure code using clojure itself.</p>
+
+<p>The idea is not that lisps are the right language for any particular problem but that
+  clojure encorages solving problems by creating new micro languages tailored to solve that problem</p>
+
+<p>This approach allow us to not only solve the immediate problem we started out to solve but also
+  with a whole class of problems in that domain.</p>
+
+<p>This approach creates Meta linquistic abstractions - the approach of creating a domain specific language
+  that's then used to solve the problem at hand.</p>
+
+<p>The hope is that this leaves us with a system that is highly flexibly and maintainable while staying
+  small and eaier to understand and debug</p>
+
+<p>Clojure macros help presenting abstractions as a convenient feture of the language (bottom up driven development).
+  A DSL wraps domain abstractions in a layer of language.</p>
+
+<p>What gets created at the end of such a bottom up process is a rich set of primativess,
+  opertors, and forms for combinations that closely models the business domain</p>
+
+<p>To do the needful when creating a DSL we must look not only at top-level expression,
+  but also at all the internal expression forms</p>
+
+<p>The output of the job macro is as a clojure map of defnk type functions .
+  This is easily moved this around to different workers that then get compiled and run in the containing environment.</p>
+
+<p>The job dsl is a set of deep walking macros. It doesn't just evaluate its top level form
+  but descends into its children and keeps going deeper.</p>
+
+<p>in order to cover all the different cases we want to be able to have our job work for things besides
+  defn as well: do, fn, let, loop, when, letfn are places it makes sense to have our job in place.</p>
+
+<p>### Background DEEP WALKING TECHNIQUES:</p>
+
+<p>Abstract Syntax Tree.
+  This pattern is to read forms into a map of nested clojure data structures
+  do some transforms on that structure and spit out forms generated from the data.
+  Reads in the form into a staging type data structure, do the transforms on the  data structure of forms,  and
+  create clojure code from transform</p>
+
+<pre><code>Additive transformations:
+</code></pre>
+
+<p>This type of macro takes an expression and augmented it with additional stuff
+  in a particular fashion creating some data structure/form/verb</p>
+
+<p>In place transformations:
+  Transform the expression as it’s traversed</p>
+
+<p>We will use all three
+   Parses the form into an abstract syntax tree [channel, map, symbol]
+   Take the AST and organize it into a function graph that connects the
+      channels together in a ci build workflow.
+   Transforming reads/writes to channels into the [:token {:message {}}]
+      format.</p>
+
+<p>Seperating the process of converting the dsl into two teps allows the parameters,
+  intialization data and auxliary channels [monitor log input error output] to be
+  created at the beginning of the function graph thus available to subsequent steps
+  that will be responding to input at run time.</p>
+
+<p>The job builder modules are executed in sequence.</p>
+
+<p>Generally the sequence is:
+  parameters/properties
+  scm
+  triggers
+  wrappers
+  prebuilders (lein only, configured like Builders)
+  builders (maven, freestyle, matrix, etc..)
+  postbuilders (maven only, configured like Builders)
+  publishers/reporters/notifications</p>
+
+<h1></h1>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
@@ -162,17 +476,11 @@ that then get compiled and run in the containing environment</p></li>
 <p>Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.</p>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Spankins maintained by <a href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
-
-    
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
