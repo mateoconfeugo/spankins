@@ -7,13 +7,16 @@
             [korma.db :refer [defdb mysql]]
             [spankins.database :refer [job-run-dbh]]))
 
-(declare job run job_run)
+(declare job run job_run job_log run_log)
 
 (defentity job
   (pk :id)
   (table :job)
-  (fields   :id :name :type :created_on :last_ran :last_success :last_fail)
+  (fields  :id :name :type :created_on :last_ran :last_success :last_fail)
   (many-to-many job_run {:fk :job_id}))
+
+(defentity job_log)
+(defentity run_log)
 
 (defentity run
   (pk :id)
@@ -29,6 +32,12 @@
   (pk :url)
   (table :url)
   (fields :url))
+
+(defn validate-job [name] false)
+(defn validate-run [] false)
+(defn log-job [job] [:1])
+(defn log-run [run] [:2])
+
 
 (comment
 (defn insert-entity [db entity]
