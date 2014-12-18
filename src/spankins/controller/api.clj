@@ -7,7 +7,7 @@
 
 (defn overview
   "Latest status of all the most recent actvie jobs"
-  []
+  [project-id]
   [{:name "job1" :run-id 1
     :runtime nil :begin nil
     :end nil     :run-status :done

@@ -1,7 +1,11 @@
 (ns spankins.app
-  (:require  [spankins.workspace :refer [job-server]]))
+  (:require [jayq.core :refer [document-ready]]
+            [spankins.workspace :refer [job-server overview  overview-page  display-stage run-test]]))
 
 (defn main [& args]
   "Application driver attaches event handlers to elements and starts the application going"
-  (do (job-server)
-      (.log js/console "client app starting")))
+  (job-server)
+;;  (run-test)
+  )
+    ;;    (job-server)
+(document-ready main)

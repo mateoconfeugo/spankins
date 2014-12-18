@@ -9,6 +9,8 @@
   :uberjar-name "spankins-0.1.0-standalone.jar"
   :jvm-opts ["-Xmx2g" "-server" "-XX:MaxPermSize=1g" "-XX:+CMSClassUnloadingEnabled"]
   :ring {:handler spankins.handler/request-handler :auto-reload? true :auto-refresh true}
+  :repositories [["private" {:url "s3p://marketwithgusto.repo/releases/" :username :env :passphrase :env}]
+                 ["sonatype-staging"  {:url "https://oss.sonatype.org/content/groups/staging/"}]]
   :dependencies [[amalloy/ring-gzip-middleware "0.1.3" :exclusions [org.clojure/clojure]]
                  [compojure "1.3.1"]
                  [cheshire "5.4.0"]
@@ -17,7 +19,9 @@
                  [enfocus "2.0.2"]
                  [enlive "1.1.5"]
                  [expectations "2.0.13"]
+                 [http-kit "2.1.16"]
                  [jayq "2.5.2"]
+                 [flourish-common "0.1.0"]
                  [korma "0.4.0"]
                  [mysql/mysql-connector-java "5.1.34"]
                  [org.clojure/java.jdbc "0.3.6"]
@@ -34,7 +38,7 @@
                  [ring-refresh "0.1.2" :exclusions [[org.clojure/clojure] [compojure]]]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [ring.middleware.logger "0.5.0"]
-                 [ring-anti-forgery "0.3.0"]
+                 [ring/ring-anti-forgery "1.0.0"]
                  [ring-mock "0.1.5"]
                  [ring/ring-devel "1.3.2"]
                  [shoreleave "0.3.0"]
@@ -54,24 +58,3 @@
             [lein-expectations "0.0.7"]
             [lein-marginalia "0.7.1"]
             [lein-autoexpect "0.2.5"]])
-            ;;
-
-;;                 [com.ashafa/clutch "0.4.0"]
-;;                 [com.taoensso/timbre "3.3.1"]
-;;                 [org.slf4j/slf4j-api "1.6.2"]
-;;                 [org.slf4j/slf4j-log4j12 "1.6.2"]
-                 ;;                 [log4j "1.2.16"]
-;;                 [clojurewerkz/urly "1.0.0"]
-                 ;;                 [commons-logging "1.1.1"]
-;;                 [clj-webdriver "0.6.1"]
-                 ;;                 [crypto-random "1.2.0"]
-;;                 [gapi "1.0.1"]
-;;                 [incanter/incanter-core "1.5.5"]
-;;                 [javax.servlet/servlet-api "2.5"]
-;;                 [log4j "1.2.17" :exclusions [javax.mail/mail javax.jms/jms com.sun.jdmk/jmxtools com.sun.jmx/jmxri]]
-;;                 [me.raynes/fs "1.4.6"]
-                 ;;                 [metis "0.3.3"] ; Validation
-;;                 [org.clojure/core.typed "0.2.72"]
-                 ;;                 [org.clojure/data.zip "0.1.1"]
-
-;;                 [org.xerial/sqlite-jdbc "3.8.7"]

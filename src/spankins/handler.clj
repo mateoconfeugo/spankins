@@ -4,6 +4,7 @@
             [ring.middleware.gzip :refer [wrap-gzip]]
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+            [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.session.cookie :refer [cookie-store]]
             [shoreleave.middleware.rpc :refer [wrap-rpc]]
             [spankins.routes :refer [all-routes]])
@@ -28,7 +29,8 @@
       wrap-rpc
 ;;      wrap-add-anti-forgery-cookie
 ;;      wrap-anti-forgery
-;;      wrap-gzip
+      wrap-session
+      wrap-gzip
       (handler/site {:session {:cookie-name (cfg :cookie-name)
                                :store (cookie-store {:key (cfg :session-secret)})
                                :cookie-attrs {:max-age (cfg :session-max-age-seconds)
