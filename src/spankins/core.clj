@@ -11,10 +11,10 @@
 (defn init [args] (swap! state assoc :running true))
 
 (defn start []
-  (do
-    (spankins.server/start-app (:spankins-daemon-host cfg) (:spankins-daemon-port cfg)))
+  (let [daemon (spankins.server/start-app (:spankins-daemon-host cfg) (:spankins-daemon-port cfg))]
     (if-let [monitoring-bus (try (tcp-client) (catch java.io.IOException e))]
-      (riemann.client/send-event monitoring-bus {:service "spankins-daemon started" :state "info" :tags["spankins-daemon"]})))
+      (riemann.client/send-event monitoring-bus {:service "spankins-daemon started" :state "info" :tags["spankins-daemon"]}))
+  daemon))
 
 (defn stop []  (swap! state assoc :running false))
 

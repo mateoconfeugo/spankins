@@ -26,9 +26,9 @@
   [app]
   (-> app
       wrap-rpc
-      wrap-add-anti-forgery-cookie
-      wrap-anti-forgery
-      wrap-gzip
+;;      wrap-add-anti-forgery-cookie
+;;      wrap-anti-forgery
+;;      wrap-gzip
       (handler/site {:session {:cookie-name (cfg :cookie-name)
                                :store (cookie-store {:key (cfg :session-secret)})
                                :cookie-attrs {:max-age (cfg :session-max-age-seconds)

@@ -6,8 +6,7 @@
 
 (defn start-app
   [host port]
-
   (run-jetty request-handler {:host host :port port :join? false}))
 
-(defn -main  []
+(defn -main  [& args]
   (start-app (:spankins-daemon-host cfg) (:spankins-daemon-port cfg)))
