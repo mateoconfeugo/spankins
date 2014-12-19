@@ -8,43 +8,62 @@
             [riemann.client :refer [tcp-client send-event]]
             [spankins.protocols :refer [build Job]]))
 
-(def workflow {:riemann (fnk [ip]
-                             (tcp-client {:host ip}))
-               :monitor (fnk [riemann]
-                             (let [mc (chan)]
-                               (go  (while true
-                                      (when-let [x (<! mc)]
-                                        (send-event riemann x))))
-                               mc))
-               :build-results (fnk [input] (chan))
-               :step-02 (fnk [input monitor]
-                             (let [output (chan)]
-                               (when-let [input-data (go (<! input))]
-                                 (do (go (>! monitor input-data)
-                                         (pprint "lein compile"))
-                                     (go (>! output [:build-done {:message "completed build"}])))
-                                 output)))
-               :step-01 (fnk [input monitor step-02]
-                             (let [output (chan)]
-                               (go (while true
-                                     (when-let [[val ch] (alts! input)]
-                                       (do (>! monitor val)
-                                           (pprint "lein compile")
-                                           (>! step-02 [:step-02 {:message "transition to step 2xx"}])))))
-                               output))
-               :publisher-01 (fnk [build-results monitor publisher-02]
-                                  (let [output (chan)]
-                                    (go (while true
-                                          (when-let [[val ch] (alts! [build-results])]
-                                            (do (>! monitor val)
-                                                (pprint "lein compile")
-                                                (>! publisher-02 [:publisher-02 {:message "transition to step 2xx"}])))))))})
+(comment
+  (def bacon {:one (fnk [] :blah)
+              :two (fnk [one] :ham)})
+  (plumbing.core/defnk [] (println "foo"))
 
-(defn new-job
+  (def workflow {:ip "127.0.0.1"
+                 :riemann (fnk[ip]
+                              ;;                             (tcp-client {:host ip})
+                              (print ip)
+                              )
+
+                 })
+
+
+  :monitor (fnk [riemann]
+                (let [mc (chan)]
+                  (go  (while true
+                         (when-let [x (<! mc)]
+                           (send-event riemann x))))
+                  mc))
+  :build-results (fnk [input] (chan))
+  :step-02 (fnk [input monitor]
+                (let [output (chan)]
+                  (when-let [input-data (go (<! input))]
+                    (do (go (>! monitor input-data)
+                            (pprint "lein compile"))
+                        (go (>! output [:build-done {:message "completed build"}])))
+                    output)))
+  :step-01 (fnk [input monitor step-02]
+                (let [output (chan)]
+                  (go (while true
+                        (when-let [[val ch] (alts! input)]
+                          (do (>! monitor val)
+                              (pprint "lein compile")
+                              (>! step-02 [:step-02 {:message "transition to step 2xx"}])))))
+                  output))
+  :publisher-01 (fnk [build-results monitor publisher-02]
+                     (let [output (chan)]
+                       (go (while true
+                             (when-let [[val ch] (alts! [build-results])]
+                               (do (>! monitor val)
+                                   (pprint "lein compile")
+                                   (>! publisher-02 [:publisher-02 {:message "transition to step 2xx"}])))))))
+
+  (defn new-job
   [{:keys [monitor-ip commit-hash] :as parameters}]
   (reify Job
     (build [this parameters]
       ((graph/eager-compile workflow) parameters))))
+
+  )
+
+
+
+
+
 
 
 (comment
