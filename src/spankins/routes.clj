@@ -5,7 +5,7 @@
             [shoreleave.middleware.rpc :refer [remote-ns]]
             [spankins.controller.api]
             [spankins.controller.site :refer [site-routes]]
-            [spankins.controller.tools :refer [user-mgmt-routes]]))
+            ))
 
 (remote-ns 'spankins.controller.api :as "api")
 
@@ -16,4 +16,5 @@
   (resources "/js/" {:root "public/js"})
   (not-found "404 Page not found."))
 
-(def all-routes (routes site-routes app-routes user-mgmt-routes))
+;;(def all-routes (routes site-routes app-routes user-mgmt-routes))
+(def all-routes (routes site-routes app-routes))
