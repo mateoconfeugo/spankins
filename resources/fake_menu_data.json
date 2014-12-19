@@ -1,0 +1,11 @@
+{
+	"drop_down_menu":[
+	    {"drop_down_menu_name":"Reports",
+	     "menu_item":[
+		 {"menu_item_url":"/overview","menu_item_text":"Overview"},
+		 {"menu_item_url":"/summary","menu_item_text":"Job Summary"}]},
+	    {"drop_down_menu_name":"Config",
+	     "menu_item":[
+		 {"menu_item_url":"/job","menu_item_text":"Job Config"},
+		 {"menu_item_url":"/job-builder","menu_item_text":"Job Builder"}]}
+]}

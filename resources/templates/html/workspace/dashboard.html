@@ -1,0 +1,93 @@
+<html lang="en">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <title>Gusto User Dashboard</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link href="/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+<!--    <link href="/css/main.css" rel="stylesheet"/> -->
+    <link href="/css/management.css" rel="stylesheet"/>
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa&subset=latin" rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Belleza&subset=latin" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <nav class="container navbar">
+      <ul>
+	<li><h3>Config</h3></li>
+	<li><h3>Edit</h3></li>
+	<li><a role="button" class="btn btn-warning">Run Time</a></li>
+      </ul>
+    </nav>
+    <div class="row span12 page-content">
+      <div id="rootwizard" class="tabbable tabs-top span8 container">
+	<ul id="nav-controls-destination" class="nav nav-tabs">
+	  <li><a href="#tab0" data-toggle="tab" class="btn btn-success" >Config</a></li>
+	</ul>
+	<section class="tab-content">
+	  <div class="tab-pane" id="tab0">
+	    <ul>
+	      <li>
+		<article class="span6 offset">
+		  <h1>Config</h1>
+		  <aside><h2>Configure job</h2></aside>
+		  <div class="hero-unit"></div>
+		</article>
+	      </li>
+	    </ul>
+	  </div>
+	</section>
+      </div>
+      <header></header>
+    </div>
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+	<div class="alert alert-error" style="display:none">
+	  <strong>Ooops!</strong> Try again
+	</div>
+	<div class="alert alert-success" style="display:none">
+	  <strong>Success!</strong> You passed the validation.
+	</div>
+	<form id="support-group-form" autocomplete="on" method="POST">
+	  <fieldset>
+	    <legend>Upgrade to the live edition?<br/>
+	    <h5>Take your demo live</h5>
+	    </legend>
+	    <label>Name</label><input id="lead_full_name" type="text"  class="required"/>
+	    <label>Email</label><input id="lead_email" type="text"  class="required email"/>
+	    <label>Phone</label><input id="lead_phone" type="text"  class="required phoneUS"/>
+	    <label>Zip</label><input id="lead_postal_code" type="text"/>
+	    <input id="lead_newsletter" type="checkbox" checked=true> Get Our Free Newsletter<br/>
+	    <input type="submit" value="Go" id="support" class="support-group-lead-btn submit"><a href="#terms_and_conditions_modal" data-toggle="modal">&nbspTerms and Conditions</a>
+	  </fieldset>
+	</form>
+      </div>
+    </div>
+    <div id="terms_and_conditions_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="terms_andcondtions_label" aria-hidden="true">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="modal-body">
+	<p>We value your privacy - all information given won't be shared with any 3rd party<p>
+      </div>
+    </div>
+  </div>
+  <footer id="server_message_channel"></footer>
+  <script src="/js/lib/modernizr-2.6.2.min.js"></script>
+  <script src="/js/lib/jquery.min.js"></script>
+  <script src="/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/management-debug.js"></script>
+  <script type="text/javascript" src="/js/startup.js"></script>
+</body>
+</html>
