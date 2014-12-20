@@ -4,102 +4,130 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Spankins by mateoconfeugo</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
-    <div class="wrapper">
+
       <header>
-        <h1 class="header">Spankins</h1>
-        <p class="header">a Jenkins inspired continuous integration server and DSL</p>
-
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/mateoconfeugo/spankins/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/mateoconfeugo/spankins/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/mateoconfeugo/spankins">View On GitHub</a></li>
-        </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
-
-
+        <h1>Spankins</h1>
+        <p>a Jenkins inspired continuous integration server and DSL</p>
       </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/mateoconfeugo/spankins" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/mateoconfeugo/spankins/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/mateoconfeugo/spankins/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
         <h1>
 <a id="spankins" class="anchor" href="#spankins" aria-hidden="true"><span class="octicon octicon-link"></span></a>spankins</h1>
 
 <p>Continuous Integration/Delivery/Deployment Domain Specific Language (DSL) runnning in the context of a forked github webapp server project.</p>
 
-<p>Usage:</p>
+<p><strong>Contents</strong></p>
 
-<p>[spankins "0.1.0"]</p>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#motivation">Motivation?</a></li>
+<li><a href="#dsl">DSL</a></li>
+<li><a href="#explanation">Explanation?</a></li>
+<li><a href="#dcwm">Deep Code Walking Macros</a></li>
+<li><a href="#reading">Reading</a></li>
+<li><a href="#terminology">Terminology</a></li>
+</ul>
 
-<p>;; In your ns statement:
-(ns my.ns
-  (:require [spankins.core :refer :all]))</p>
+<p><a name="overview"></a></p>
 
-<p>Example of a DSL to perform a CI type task:</p>
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>Example of a DSL to perform a dev-ops type task:</p>
 
 <p>This particular task upon a commit to a branch in git hub create an uberjar and deploy the uberjar emailing and creating the neccessary reports.</p>
 
-<p>(def ci-spec (job<br>
-                (parameters :commit :release)<br>
-                (scm :git (:commit parameters))<br>
-                (build<br>
-                 (step<br>
-                     (&gt;! monitor "compiling app")<br>
-                     (pprint "lein compile"))<br>
-                 (step (pprint "lein test"))<br>
-                 (step (pprint "lein uberjar"))<br>
-                 (step (pprint "lein deploy private"))<br>
-                 (step (pprint "lien pallet up")))<br>
-                 (publishers<br>
-                   (publish (email "<a href="mailto:a@b.com">a@b.com</a>"))<br>
-                   (publish (report<br>
-                               (let [results (&lt;! build-results)]<br>
-                                 create-report)))))) </p>
+<div class="highlight highlight-clojure"><pre>(<span class="pl-k">ns</span> <span class="pl-e">my.ns</span>
+  (<span class="pl-c1">:require</span> [spankins.core <span class="pl-c1">:refer</span> <span class="pl-c1">:all</span>]))
 
-<p>The project is an out growth of experience gained working with Jenkins/hudson.</p>
+
+  (<span class="pl-k">def</span> <span class="pl-e">ci-spec</span> (job
+                (parameters <span class="pl-c1">:commit</span> <span class="pl-c1">:release</span>)
+                (scm <span class="pl-c1">:git</span> (<span class="pl-c1">:commit</span> parameters))
+                (build
+                 (step
+                     (&gt;! monitor <span class="pl-s1"><span class="pl-pds">"</span>compiling app<span class="pl-pds">"</span></span>)
+                     (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein compile<span class="pl-pds">"</span></span>))
+                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein test<span class="pl-pds">"</span></span>))
+                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein uberjar<span class="pl-pds">"</span></span>))
+                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein deploy private<span class="pl-pds">"</span></span>))
+                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lien pallet up<span class="pl-pds">"</span></span>)))
+                 (publishers
+                   (publish (email <span class="pl-s1"><span class="pl-pds">"</span>a@b.com<span class="pl-pds">"</span></span>))
+                   (publish (report
+                               (<span class="pl-s">let</span> [results (&lt;! build-results)]
+                                 create-report))))))</pre></div>
+
+<p><a name="installation"></a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>[spankins "0.1.0"]
+</code></pre>
+
+<p><a name="motivation"></a></p>
+
+<h2>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
+
+<p>largerly an out growth of frustration using jenkins:</p>
 
 <ul>
-<li>
-<p>Why?
-some of the problems with jenkins:</p>
-
-<ol>
 <li>very general purpose; therefore, heavy to do lightweight tasks</li>
 <li>difficult to version control the server side of jenkins</li>
 <li>jenkins is largerly defined by your set of plug ins.</li>
-<li>The dirty secret is jenkins writes to a file and shells out to that ...weak!</li>
-<li>less control of most things plugins offer then using the api's directly</li>
+<li>The dirty secret is jenkins writes to a file and shells out to that ...weak!
+-. less control of most things plugins offer then using the api's directly</li>
 <li>Its not a simple to understand program</li>
 <li>So many steps</li>
 <li>difficult for developers to run on their own.</li>
 <li>We should be simplifing the process not adding to the complexity</li>
-<li>Command line tools are slow and limited.</li>
-</ol>
+<li>
+<p>Command line tools are slow and limited.</p>
 
 <p>The hope of all this is</p>
-
-<ul>
+</li>
 <li>Simple to understand continuous integration program that is flexibly and easy to maintain and understand</li>
 <li>Lightweight -  okay,  its running on the jvm but compared to a typical jenkins install with all its plugins</li>
 <li>Very fast compared to anything.</li>
 <li>Easy to make new job types out of function graphs and easy to customize these types.</li>
 <li>Everything in one language clojure versus jenkins java, jelly, xml, groovy</li>
 <li>Plugins are just functions/graphs</li>
-<li>Debuggable/REPL I use cider </li>
+<li>Debuggable/REPL I use cider</li>
 <li>Work on interactively</li>
 <li>Handle very high concurrent load</li>
 <li>A living piece of software that you improve and customize but there is no magic places.</li>
 <li>A versionable, rollbackable configuration system.</li>
-</ul>
-</li>
 </ul>
 
 <p>Things to note.</p>
@@ -131,7 +159,7 @@ some of the problems with jenkins:</p>
 
 <p>So how do this work</p>
 
-<ol>
+<ul>
 <li>Developer check in code and triggers a hook</li>
 <li>The commit hash is sent via the hook to a rest api</li>
 <li>The "jenkins"-lite server takes this commit and project and builds a function graph</li>
@@ -141,24 +169,24 @@ some of the problems with jenkins:</p>
 <li>The processing channel runs the function graph in a seperate thread</li>
 <li>Upon returning the function graphs results are sent to the output results channel</li>
 <li>The "jenkins"-lite server takes these results and</li>
-</ol>
+</ul>
 </li>
 </ul>
 
 <h3>
 <a id="how-do-you-uses-this" class="anchor" href="#how-do-you-uses-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do you uses this?</h3>
 
-<p>One of the central ideas of this approach is that a use of this program forks this projects and ads there changes as adaptations to the code.   This way there aren't any plugins just include the library in the project dependencies and use it as you see fit.  The point of the DSL is that it is runable code and can be part of an application. This application is for managing your infrastructure.  </p>
+<p>One of the central ideas of this approach is that a use of this program forks this projects and ads there changes as adaptations to the code.   This way there aren't any plugins just include the library in the project dependencies and use it as you see fit.  The point of the DSL is that it is runable code and can be part of an application. This application is for managing your infrastructure.</p>
 
-<h3>
-<a id="dsl" class="anchor" href="#dsl" aria-hidden="true"><span class="octicon octicon-link"></span></a>DSL</h3>
+<p><a name="dsl"></a></p>
 
-<h1></h1>
+<h1>
+<a id="dsl" class="anchor" href="#dsl" aria-hidden="true"><span class="octicon octicon-link"></span></a>DSL</h1>
 
 <p>A set of composable macros that build out the stages of the jobs workflow and in the end create a job graph</p>
 
-<h3>
-<a id="job-graph" class="anchor" href="#job-graph" aria-hidden="true"><span class="octicon octicon-link"></span></a>Job Graph</h3>
+<h2>
+<a id="job-graph" class="anchor" href="#job-graph" aria-hidden="true"><span class="octicon octicon-link"></span></a>Job Graph</h2>
 
 <p>A job is a combination of a channels hooked up together in a workflow via a function graph.</p>
 
@@ -175,7 +203,7 @@ some of the problems with jenkins:</p>
 <li>
 <p>emailing/messaging/storing results</p>
 
-<p>Each of these stages can be implemented in a go block and perhaps within a  while loop that will terminate 
+<p>Each of these stages can be implemented in a go block and perhaps within a  while loop that will terminate
 as a result of completing an action or receiving a control message from a channel or a channel closing.</p>
 </li>
 </ul>
@@ -188,22 +216,21 @@ These channels are used to communicate with job.</p>
 
 <ul>
 <li>The raw job can passed to and returned from functions and channels</li>
-<li>The job graphs return immediately when the compiled function is called.<br>
-</li>
+<li>The job graphs return immediately when the compiled function is called.</li>
 <li>All the synchronization of the build work flow a job specifies is done through channels.</li>
 <li>Communication  between stages happens via the channels.</li>
 <li>
 <p>The job graph keys may be channels, maps of channels or any other clojure data structure.</p>
 
-<p>The function returns almost immediately; however, within on function calls multiple 
-go routines may have been started and are running.  </p>
+<p>The function returns almost immediately; however, within on function calls multiple
+go routines may have been started and are running.</p>
 
-<p>Interacting with these running jobs is accomplished by sending and recieving messages via 
+<p>Interacting with these running jobs is accomplished by sending and recieving messages via
 the channels returned from the function call.</p>
 </li>
 </ul>
 
-<p>Instead of using a complicated mix of plugins we try to use clojure libraries and mechanisms in the 
+<p>Instead of using a complicated mix of plugins we try to use clojure libraries and mechanisms in the
 language itself to replicate the functionality of jenkins.</p>
 
 <h2>
@@ -247,25 +274,21 @@ function graphs  go routines and channels</p>
 
 <p>LAYERS in DSL-driven system.</p>
 
-<hr>
-
-<h2>
-<a id="-------------------------domain-specific-code" class="anchor" href="#-------------------------domain-specific-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>                         Domain Specific code</h2>
-
-<h2>
-<a id="-------------------------runtime-for-dsl-code" class="anchor" href="#-------------------------runtime-for-dsl-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>                         Runtime for DSL code</h2>
-
-<h2>
-<a id="-------higher-level-entities-----a-data-and-b-control" class="anchor" href="#-------higher-level-entities-----a-data-and-b-control" aria-hidden="true"><span class="octicon octicon-link"></span></a>       Higher-level entities   - A: data and B: control</h2>
-
-<h2>
-<a id="-a-domain-specific-data-structures--b-domain-specific-control-structures" class="anchor" href="#-a-domain-specific-data-structures--b-domain-specific-control-structures" aria-hidden="true"><span class="octicon octicon-link"></span></a> A: Domain-specific data structures | B: Domain-specific control structures</h2>
-
-<h2>
-<a id="--------------------low-lev-domain-primitives" class="anchor" href="#--------------------low-lev-domain-primitives" aria-hidden="true"><span class="octicon octicon-link"></span></a>                    Low-lev domain primitives</h2>
-
-<h2>
-<a id="--------------------------clojure" class="anchor" href="#--------------------------clojure" aria-hidden="true"><span class="octicon octicon-link"></span></a>                          Clojure</h2>
+<pre><code>
+----------------------------------------------------------------------
+&lt;6&gt;                         Domain Specific code
+----------------------------------------------------------------------
+&lt;5&gt;                         Runtime for DSL code
+----------------------------------------------------------------------
+&lt;4&gt;       Higher-level entities   - A: data and B: control
+----------------------------------------------------------------------
+&lt;3&gt; A: Domain-specific data structures | B: Domain-specific control structures
+----------------------------------------------------------------------
+&lt;2&gt;                    Low-lev domain primitives
+----------------------------------------------------------------------
+&lt;1&gt;                          Clojure
+----------------------------------------------------------------------
+</code></pre>
 
 <p>The dsl spec  creates a workflow function 
 This function, when invoked will create an instance of a set of
@@ -287,12 +310,13 @@ specified dsl forms</p>
 
 <hr>
 
-<p> Domain Specific code
-   (job :some-job
-        (build</p>
+<p> Domain Specific code</p>
 
-<h2>
-<a id="-----------step---monitor--message-ping" class="anchor" href="#-----------step---monitor--message-ping" aria-hidden="true"><span class="octicon octicon-link"></span></a>           (step  (&gt;! $monitor  {:message :ping}))))</h2>
+<div class="highlight highlight-clojure"><pre>   (job <span class="pl-c1">:some-job</span>
+        (build
+           (step  (&gt;! $monitor  {<span class="pl-c1">:message</span> <span class="pl-c1">:ping</span>}))))</pre></div>
+
+<hr>
 
 <p> Runtime for DSL code:
 (def job-obj (new-some-job {:settings nil}))
@@ -300,11 +324,12 @@ specified dsl forms</p>
 
 <hr>
 
-<p>       Higher-level entities   - A: data and B: control
-(def job-graph {:parameters (fnk [commit-hash] {:commit comit-hash})
-                :input (chan)
-                :output (chan)
-                :error (chan)</p>
+<p>       Higher-level entities   - A: data and B: control</p>
+
+<div class="highlight highlight-clojure"><pre>(<span class="pl-k">def</span> <span class="pl-e">job-graph</span> {<span class="pl-c1">:parameters</span> (fnk [commit-hash] {<span class="pl-c1">:commit</span> comit-hash})
+                <span class="pl-c1">:input</span> (chan)
+                <span class="pl-c1">:output</span> (chan)
+                <span class="pl-c1">:error</span> (chan)</pre></div>
 
 <p>There need to be some rules that reflect the causal nature of reality.
  scm releated activies must preceed build activies that must preceed publish
@@ -325,9 +350,9 @@ is realized by a (fnk<a href="go%20(while%20true%20(do%20%7E@stuff))"></a>)  let
 fnking go do stuff functions (FGDSF) type connected
 to a map key.  This map  will yield a set of channels for the sequence</p>
 
-<p>{:input in
- :output out
- :error error}</p>
+<div class="highlight highlight-clojure"><pre>{<span class="pl-c1">:input</span> in
+ <span class="pl-c1">:output</span> out
+ <span class="pl-c1">:error</span> error}</pre></div>
 
 <p>So this what each of the fnking go do stuff functions runs an endless
 loop hosted in a go routine but the function returns immediately a map
@@ -340,16 +365,17 @@ of three channels</p>
 This is what gets generated as the DSL is walked.  It is from this that the function graphs
 is constructed.</p>
 
-<p>(def materials {:in (chan)
+<pre><code>(def materials {:in (chan)
  :out (chan)
  :error (chan)
  :monitor (chan)
  :parameters [:commit-hash :time :use-spot-instance?]
  :properties [:environment]
  :build {:steps [...]}
- :publisher [...]})</p>
+ :publisher [...]})
 
-<p>(def job-spec-graph (build-job-graph materials))</p>
+(def job-spec-graph (build-job-graph materials))
+</code></pre>
 
 <p>B:
 Message Package [:event-token {:message }]
@@ -386,85 +412,50 @@ Actual code of doing the task.  Everything else is convience and idomatic
 easy of passing data and control to the appropriate sequence.</p>
 
 <hr>
-</li>
-</ul>
 
-<h2>
-<a id="explanation-why-using-this-approach" class="anchor" href="#explanation-why-using-this-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explanation why using this approach</h2>
+<p><a name="explanation&gt;&lt;/p&gt;%0A%0A&lt;h2&gt;Explanation&lt;/h2&gt;%0A%0A&lt;p&gt;Lisp%20is%20a%20local%20maximum%20in%20the%20space%20of%20programming%20languages,%20because%20it%20can%20do%20arbitary%20code%20transformation%0Aof%20clojure%20code%20using%20clojure%20itself.&lt;/p&gt;%0A%0A&lt;p&gt;The%20idea%20is%20not%20that%20lisps%20are%20the%20right%20language%20for%20any%20particular%20problem%20but%20that%0Aclojure%20encorages%20solving%20problems%20by%20creating%20new%20micro%20languages%20tailored%20to%20solve%20that%20problem&lt;6&gt;&lt;/p&gt;%0A%0A&lt;p&gt;This%20approach%20allow%20us%20to%20not%20only%20solve%20the%20immediate%20problem%20we%20started%20out%20to%20solve%20but%20also%0Awith%20a%20whole%20class%20of%20problems%20in%20that%20domain.&lt;/p&gt;%0A%0A&lt;p&gt;This%20approach%20creates%20Meta%20linquistic%20abstractions%20-%20the%20approach%20of%20creating%20a%20domain%20specific%20language%0Athat's%20then%20used%20to%20solve%20the%20problem%20at%20hand.&lt;/p&gt;%0A%0A&lt;p&gt;The%20hope%20is%20that%20this%20leaves%20us%20with%20a%20system%20that%20is%20highly%20flexibly%20and%20maintainable%20while%20staying%0Asmall%20and%20eaier%20to%20understand%20and%20debug&lt;/p&gt;%0A%0A&lt;p&gt;Clojure%20macros%20help%20presenting%20abstractions%20as%20a%20convenient%20feture%20of%20the%20language%20(bottom%20up%20driven%20development).%0AA%20DSL%20wraps%20domain%20abstractions%20in%20a%20layer%20of%20language.&lt;/p&gt;%0A%0A&lt;p&gt;What%20gets%20created%20at%20the%20end%20of%20such%20a%20bottom%20up%20process%20is%20a%20rich%20set%20of%20primativess,&lt;2&gt;%0Aopertors,%20and%20forms%20for%20combinations%20that%20closely%20models%20the%20business%20domain&lt;6&gt;&lt;/p&gt;%0A%0A&lt;p&gt;To%20do%20the%20needful%20when%20creating%20a%20DSL%20we%20must%20look%20not%20only%20at%20top-level%20expression,&lt;4&gt;&lt;3&gt;&lt;2&gt;%0Abut%20also%20at%20all%20the%20internal%20expression%20forms&lt;/p&gt;%0A%0A&lt;p&gt;The%20output%20of%20the%20job%20macro%20is%20as%20a%20clojure%20map%20of%20defnk%20type%20functions%20&lt;3A,B&gt;.%0AThis%20is%20easily%20moved%20this%20around%20to%20different%20workers%20that%20then%20get%20compiled%20and%20run%20in%20the%20containing%20environment.&lt;/p&gt;%0A%0A&lt;p&gt;The%20job%20dsl%20is%20a%20set%20of%20deep%20walking%20macros.%20It%20doesn't%20just%20evaluate%20its%20top%20level%20form%0Abut%20descends%20into%20its%20children%20and%20keeps%20going%20deeper.&lt;/p&gt;%0A%0A&lt;p&gt;in%20order%20to%20cover%20all%20the%20different%20cases%20we%20want%20to%20be%20able%20to%20have%20our%20job%20work%20for%20things%20besides%0Adefn%20as%20well:%20do,%20fn,%20let,%20loop,%20when,%20letfn%20are%20places%20it%20makes%20sense%20to%20have%20our%20job%20in%20place.&lt;/p&gt;%0A%0A&lt;p&gt;&lt;a%20name="></a></p>
 
-<p>Lisp is a local maximum in the space of programming languages, because it can do arbitary code transformation
-  of clojure code using clojure itself.</p>
-
-<p>The idea is not that lisps are the right language for any particular problem but that
-  clojure encorages solving problems by creating new micro languages tailored to solve that problem</p>
-
-<p>This approach allow us to not only solve the immediate problem we started out to solve but also
-  with a whole class of problems in that domain.</p>
-
-<p>This approach creates Meta linquistic abstractions - the approach of creating a domain specific language
-  that's then used to solve the problem at hand.</p>
-
-<p>The hope is that this leaves us with a system that is highly flexibly and maintainable while staying
-  small and eaier to understand and debug</p>
-
-<p>Clojure macros help presenting abstractions as a convenient feture of the language (bottom up driven development).
-  A DSL wraps domain abstractions in a layer of language.</p>
-
-<p>What gets created at the end of such a bottom up process is a rich set of primativess,
-  opertors, and forms for combinations that closely models the business domain</p>
-
-<p>To do the needful when creating a DSL we must look not only at top-level expression,
-  but also at all the internal expression forms</p>
-
-<p>The output of the job macro is as a clojure map of defnk type functions .
-  This is easily moved this around to different workers that then get compiled and run in the containing environment.</p>
-
-<p>The job dsl is a set of deep walking macros. It doesn't just evaluate its top level form
-  but descends into its children and keeps going deeper.</p>
-
-<p>in order to cover all the different cases we want to be able to have our job work for things besides
-  defn as well: do, fn, let, loop, when, letfn are places it makes sense to have our job in place.</p>
-
-<p>### Background DEEP WALKING TECHNIQUES:</p>
+<h3>
+<a id="background-deep-code-walking-macro-techniques" class="anchor" href="#background-deep-code-walking-macro-techniques" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background DEEP CODE WALKING MACRO TECHNIQUES:</h3>
 
 <p>Abstract Syntax Tree.
-  This pattern is to read forms into a map of nested clojure data structures
-  do some transforms on that structure and spit out forms generated from the data.
-  Reads in the form into a staging type data structure, do the transforms on the  data structure of forms,  and
-  create clojure code from transform</p>
+This pattern is to read forms into a map of nested clojure data structures
+do some transforms on that structure and spit out forms generated from the data.
+Reads in the form into a staging type data structure, do the transforms on the  data structure of forms,  and
+create clojure code from transform</p>
 
-<pre><code>Additive transformations:
-</code></pre>
-
-<p>This type of macro takes an expression and augmented it with additional stuff
-  in a particular fashion creating some data structure/form/verb</p>
+<p>Additive transformations:
+This type of macro takes an expression and augmented it with additional stuff
+in a particular fashion creating some data structure/form/verb</p>
 
 <p>In place transformations:
-  Transform the expression as it’s traversed</p>
+Transform the expression as it’s traversed</p>
 
 <p>We will use all three
-   Parses the form into an abstract syntax tree [channel, map, symbol]
-   Take the AST and organize it into a function graph that connects the
-      channels together in a ci build workflow.
-   Transforming reads/writes to channels into the [:token {:message {}}]
-      format.</p>
+ Parses the form into an abstract syntax tree [channel, map, symbol]
+ Take the AST and organize it into a function graph that connects the
+    channels together in a ci build workflow.
+ Transforming reads/writes to channels into the [:token {:message {}}]
+    format.</p>
 
 <p>Seperating the process of converting the dsl into two teps allows the parameters,
-  intialization data and auxliary channels [monitor log input error output] to be
-  created at the beginning of the function graph thus available to subsequent steps
-  that will be responding to input at run time.</p>
+intialization data and auxliary channels [monitor log input error output] to be
+created at the beginning of the function graph thus available to subsequent steps
+that will be responding to input at run time.</p>
 
 <p>The job builder modules are executed in sequence.</p>
 
 <p>Generally the sequence is:
-  parameters/properties
-  scm
-  triggers
-  wrappers
-  prebuilders (lein only, configured like Builders)
-  builders (maven, freestyle, matrix, etc..)
-  postbuilders (maven only, configured like Builders)
-  publishers/reporters/notifications</p>
+parameters/properties
+scm
+triggers
+wrappers
+prebuilders (lein only, configured like Builders)
+builders (maven, freestyle, matrix, etc..)
+postbuilders (maven only, configured like Builders)
+publishers/reporters/notifications</p>
+</li>
+</ul>
 
 <h1></h1>
 
@@ -477,10 +468,11 @@ easy of passing data and control to the appropriate sequence.</p>
 your option) any later version.</p>
       </section>
       <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p>Project maintained by <a href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+    
   </body>
 </html>
