@@ -132,7 +132,6 @@
      (go (>! output [:overview resp])))
     output))
 
-
 ;; Entry point into the client side of the application.
 (defn job-server []
   (let [model (overview 1)
