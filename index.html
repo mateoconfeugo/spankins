@@ -6,8 +6,7 @@
     <title>Spankins by mateoconfeugo</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
+    <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -16,18 +15,17 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">Spankins</h1>
-        <p class="header">a Jenkins inspired continuous integration server and DSL</p>
+        <h1>Spankins</h1>
+        <p>a Jenkins inspired continuous integration server and DSL</p>
+
+        <p class="view"><a href="https://github.com/mateoconfeugo/spankins">View the Project on GitHub <small>mateoconfeugo/spankins</small></a></p>
+
 
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/mateoconfeugo/spankins/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/mateoconfeugo/spankins/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/mateoconfeugo/spankins">View On GitHub</a></li>
+          <li><a href="https://github.com/mateoconfeugo/spankins/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mateoconfeugo/spankins/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mateoconfeugo/spankins">View On <strong>GitHub</strong></a></li>
         </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
-
-
       </header>
       <section>
         <h1>
@@ -57,25 +55,25 @@
 
 <p>This particular task upon a commit to a branch in git hub create an uberjar and deploy the uberjar emailing and creating the neccessary reports.</p>
 
-<div class="highlight highlight-clojure"><pre>(<span class="pl-k">ns</span> <span class="pl-e">my.ns</span>
+<div class="highlight highlight-source-clojure"><pre>(<span class="pl-k">ns</span> <span class="pl-e">my.ns</span>
   (<span class="pl-c1">:require</span> [spankins.core <span class="pl-c1">:refer</span> <span class="pl-c1">:all</span>]))
 
 
-  (<span class="pl-k">def</span> <span class="pl-e">ci-spec</span> (job
-                (parameters <span class="pl-c1">:commit</span> <span class="pl-c1">:release</span>)
-                (scm <span class="pl-c1">:git</span> (<span class="pl-c1">:commit</span> parameters))
-                (build
-                 (step
-                     (&gt;! monitor <span class="pl-s1"><span class="pl-pds">"</span>compiling app<span class="pl-pds">"</span></span>)
-                     (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein compile<span class="pl-pds">"</span></span>))
-                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein test<span class="pl-pds">"</span></span>))
-                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein uberjar<span class="pl-pds">"</span></span>))
-                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lein deploy private<span class="pl-pds">"</span></span>))
-                 (step (pprint <span class="pl-s1"><span class="pl-pds">"</span>lien pallet up<span class="pl-pds">"</span></span>)))
-                 (publishers
-                   (publish (email <span class="pl-s1"><span class="pl-pds">"</span>a@b.com<span class="pl-pds">"</span></span>))
-                   (publish (report
-                               (<span class="pl-s">let</span> [results (&lt;! build-results)]
+  (<span class="pl-k">def</span> <span class="pl-e">ci-spec</span> (<span class="pl-en">job</span>
+                (<span class="pl-en">parameters</span> <span class="pl-c1">:commit</span> <span class="pl-c1">:release</span>)
+                (<span class="pl-en">scm</span> <span class="pl-c1">:git</span> (<span class="pl-c1">:commit</span> parameters))
+                (<span class="pl-en">build</span>
+                 (<span class="pl-en">step</span>
+                     (<span class="pl-en">&gt;!</span> monitor <span class="pl-s"><span class="pl-pds">"</span>compiling app<span class="pl-pds">"</span></span>)
+                     (<span class="pl-en">pprint</span> <span class="pl-s"><span class="pl-pds">"</span>lein compile<span class="pl-pds">"</span></span>))
+                 (<span class="pl-en">step</span> (<span class="pl-en">pprint</span> <span class="pl-s"><span class="pl-pds">"</span>lein test<span class="pl-pds">"</span></span>))
+                 (<span class="pl-en">step</span> (<span class="pl-en">pprint</span> <span class="pl-s"><span class="pl-pds">"</span>lein uberjar<span class="pl-pds">"</span></span>))
+                 (<span class="pl-en">step</span> (<span class="pl-en">pprint</span> <span class="pl-s"><span class="pl-pds">"</span>lein deploy private<span class="pl-pds">"</span></span>))
+                 (<span class="pl-en">step</span> (<span class="pl-en">pprint</span> <span class="pl-s"><span class="pl-pds">"</span>lien pallet up<span class="pl-pds">"</span></span>)))
+                 (<span class="pl-en">publishers</span>
+                   (<span class="pl-en">publish</span> (<span class="pl-en">email</span> <span class="pl-s"><span class="pl-pds">"</span>a@b.com<span class="pl-pds">"</span></span>))
+                   (<span class="pl-en">publish</span> (<span class="pl-en">report</span>
+                               (<span class="pl-k">let</span> [results (<span class="pl-en">&lt;!</span> build-results)]
                                  create-report))))))</pre></div>
 
 <p><a name="installation"></a></p>
@@ -303,9 +301,9 @@ specified dsl forms</p>
 
 <p> Domain Specific code</p>
 
-<div class="highlight highlight-clojure"><pre>   (job <span class="pl-c1">:some-job</span>
-        (build
-           (step  (&gt;! $monitor  {<span class="pl-c1">:message</span> <span class="pl-c1">:ping</span>}))))</pre></div>
+<div class="highlight highlight-source-clojure"><pre>   (<span class="pl-en">job</span> <span class="pl-c1">:some-job</span>
+        (<span class="pl-en">build</span>
+           (<span class="pl-en">step</span>  (<span class="pl-en">&gt;!</span> $monitor  {<span class="pl-c1">:message</span> <span class="pl-c1">:ping</span>}))))</pre></div>
 
 <hr>
 
@@ -317,10 +315,10 @@ specified dsl forms</p>
 
 <p>       Higher-level entities   - A: data and B: control</p>
 
-<div class="highlight highlight-clojure"><pre>(<span class="pl-k">def</span> <span class="pl-e">job-graph</span> {<span class="pl-c1">:parameters</span> (fnk [commit-hash] {<span class="pl-c1">:commit</span> comit-hash})
-                <span class="pl-c1">:input</span> (chan)
-                <span class="pl-c1">:output</span> (chan)
-                <span class="pl-c1">:error</span> (chan)</pre></div>
+<div class="highlight highlight-source-clojure"><pre>(<span class="pl-k">def</span> <span class="pl-e">job-graph</span> {<span class="pl-c1">:parameters</span> (<span class="pl-en">fnk</span> [commit-hash] {<span class="pl-c1">:commit</span> comit-hash})
+                <span class="pl-c1">:input</span> (<span class="pl-en">chan</span>)
+                <span class="pl-c1">:output</span> (<span class="pl-en">chan</span>)
+                <span class="pl-c1">:error</span> (<span class="pl-en">chan</span>)</pre></div>
 
 <p>There need to be some rules that reflect the causal nature of reality.
  scm releated activies must preceed build activies that must preceed publish
@@ -341,7 +339,7 @@ is realized by a (fnk<a href="go%20(while%20true%20(do%20%7E@stuff))"></a>)  let
 fnking go do stuff functions (FGDSF) type connected
 to a map key.  This map  will yield a set of channels for the sequence</p>
 
-<div class="highlight highlight-clojure"><pre>{<span class="pl-c1">:input</span> in
+<div class="highlight highlight-source-clojure"><pre>{<span class="pl-c1">:input</span> in
  <span class="pl-c1">:output</span> out
  <span class="pl-c1">:error</span> error}</pre></div>
 
@@ -453,16 +451,27 @@ publishers/reporters/notifications</p>
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>Copyright © 2014 FIXME</p>
+<p>Copyright © 2014 Matthew Burns All Rights Reserved</p>
 
 <p>Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.</p>
       </section>
       <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p>This project is maintained by <a href="https://github.com/mateoconfeugo">mateoconfeugo</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-67852560-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
